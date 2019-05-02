@@ -162,6 +162,8 @@
         name,
         complete: false
       }))
+
+      addTodoToDOM(name);
     }
 
     function addGoal() {
@@ -173,6 +175,14 @@
         id: generateId(),
         name
       }))
+    }
+
+    function addTodoToDOM (input){
+      const li = document.createElement('li')
+      li.textContent = input
+      const ul = document.getElementById('todos')
+      ul.appendChild(li)
+
     }
 
     const todoBtn = document.getElementById('todoBtn')
