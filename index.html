@@ -86,6 +86,17 @@
 
     }
 
+    function handleDeleteGoal(goal){
+      return(dispatch) => {
+        dispatch(removeGoalAction(goal.id))
+        return API.deleteGoal(goal)
+        .catch(()=> {
+          dispatch(addGoalAction(goal))
+          alert('an error occured, try again')
+        })
+      }
+    }
+
 
     function todos(state = [], action) {
       switch (action.type) {
@@ -259,13 +270,7 @@ function List (props) {
     }
 
     removeItem = (goal) => {
-        this.props.store.dispatch(removeGoalAction(goal.id))
-
-        return API.deleteGoal(goal)
-        .catch(()=> {
-          this.props.store.dispatch(addGoalAction(goal))
-          alert('an error occured, try again')
-        })
+        this.props.store.dispatch(handleDeleteGoal(goal))
       }
 
      
