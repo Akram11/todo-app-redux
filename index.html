@@ -73,22 +73,21 @@
       }
     }
 
-    function handleAddTodo(todo, cb){
-      return(dispatch) => {
+    function handleAddTodo(todo, cb) {
+      return (dispatch) => {
         return API.saveTodo(todo)
-        .then ((todo)=> {
-           dispatch(addTodoAction(todo))  
-           cb()
-        })
-        .catch(()=> {
-          alert ('there was an error, Try again')
-        })
+          .then((todo) => {
+            dispatch(addTodoAction(todo))
+            cb()
+          })
+          .catch(() => {
+            alert('there was an error, Try again')
+          })
       }
     }
-    
+
 
     function handleDeleteTodo(todo) {
-
       return (dispatch) => {
         dispatch(removeTodoAction(todo.id))
         return API.deleteTodo(todo.id)
@@ -100,27 +99,38 @@
 
     }
 
-    function handleAddGoal(goal, cb){
-      return(dispatch) => {
-        return API.saveGoal(goal)
-        .then((goal)=>{
-          dispatch(addGoalAction(goal))   
-          cb()  
-        })
-        .catch(()=>{
-          alert ('there was an error, try again!')
-        })
+    function handleToggle(id) {
+      return (dispatch) => {
+        dispatch(toggleTodoAction(id))
+        return API.saveTodoToggle(id)
+          .catch(() => {
+            dispatch(toggleTodoAction(id))
+            alert('an error occured, try again!')
+          })
       }
     }
 
-    function handleDeleteGoal(goal){
-      return(dispatch) => {
+    function handleAddGoal(goal, cb) {
+      return (dispatch) => {
+        return API.saveGoal(goal)
+          .then((goal) => {
+            dispatch(addGoalAction(goal))
+            cb()
+          })
+          .catch(() => {
+            alert('there was an error, try again!')
+          })
+      }
+    }
+
+    function handleDeleteGoal(goal) {
+      return (dispatch) => {
         dispatch(removeGoalAction(goal.id))
         return API.deleteGoal(goal)
-        .catch(()=> {
-          dispatch(addGoalAction(goal))
-          alert('an error occured, try again')
-        })
+          .catch(() => {
+            dispatch(addGoalAction(goal))
+            alert('an error occured, try again')
+          })
       }
     }
 
@@ -194,7 +204,7 @@
       todos,
       goals,
       loading
-    }), Redux.applyMiddleware(ReduxThunk.default , checker, logger))
+    }), Redux.applyMiddleware(ReduxThunk.default, checker, logger))
   </script>
 
   <script type='text/babel'>
@@ -235,13 +245,7 @@ function List (props) {
    }
 
     toggleItem = (id) => {
-      this.props.store.dispatch(toggleTodoAction(id))
-
-      return API.saveTodoToggle(id)
-      .catch(()=> {
-        this.props.store.dispatch(toggleTodoAction(id))
-        alert('an error occured, try again!')
-      })
+      this.props.store.dispatch(handleToggle(id))
     }
 
     render() {
