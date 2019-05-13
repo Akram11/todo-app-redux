@@ -73,33 +73,19 @@
       }
     }
 
-<<<<<<< HEAD
-    function handleAddTodo (name, cb) {
-      return (dispatch) => {
-        return API.saveTodo(name)
-=======
     function handleAddTodo(todo, cb) {
       return (dispatch) => {
         return API.saveTodo(todo)
->>>>>>> 8381e22f05fc36a665e48e3e6cbe16d9fc1210ed
           .then((todo) => {
             dispatch(addTodoAction(todo))
             cb()
           })
           .catch(() => {
-<<<<<<< HEAD
-            alert('There was an error. Try again.')
-=======
             alert('there was an error, Try again')
->>>>>>> 8381e22f05fc36a665e48e3e6cbe16d9fc1210ed
           })
       }
     }
 
-<<<<<<< HEAD
-    function handleDeleteTodo(todo) {
-=======
->>>>>>> 8381e22f05fc36a665e48e3e6cbe16d9fc1210ed
 
     function handleDeleteTodo(todo) {
       return (dispatch) => {
@@ -113,11 +99,6 @@
 
     }
 
-<<<<<<< HEAD
-    function handleAddGoal(name, cb) {
-      return (dispatch) => {
-        return API.saveGoal(name)
-=======
     function handleToggle(id) {
       return (dispatch) => {
         dispatch(toggleTodoAction(id))
@@ -132,20 +113,13 @@
     function handleAddGoal(goal, cb) {
       return (dispatch) => {
         return API.saveGoal(goal)
->>>>>>> 8381e22f05fc36a665e48e3e6cbe16d9fc1210ed
           .then((goal) => {
             dispatch(addGoalAction(goal))
             cb()
           })
-<<<<<<< HEAD
-          .catch(() => 
-            alert('there was an error, try again!')
-          )
-=======
           .catch(() => {
             alert('there was an error, try again!')
           })
->>>>>>> 8381e22f05fc36a665e48e3e6cbe16d9fc1210ed
       }
     }
 
@@ -157,8 +131,6 @@
             dispatch(addGoalAction(goal))
             alert('an error occured, try again')
           })
-<<<<<<< HEAD
-=======
       }
     }
 
@@ -170,7 +142,6 @@
         ]).then(([ todos, goals ]) => {
           dispatch(receiveDataAction(todos, goals))
         })
->>>>>>> 8381e22f05fc36a665e48e3e6cbe16d9fc1210ed
       }
     }
 
@@ -279,18 +250,11 @@ function List (props) {
    class Todos extends React.Component {
     addItem = (e) => {
         e.preventDefault()
-<<<<<<< HEAD
-        this.props.store.dispatch(handleAddTodo(
-          this.input.value,
-          () => this.input.value = ''
-        ))     
-=======
 
         this.props.store.dispatch(handleAddTodo(
           this.input.value,
           () => this.input.value = ''
         ))    
->>>>>>> 8381e22f05fc36a665e48e3e6cbe16d9fc1210ed
     }
 
     removeItem = (todo) => {
@@ -323,21 +287,11 @@ function List (props) {
   class Goals extends React.Component {
     addItem = (e) => {
         e.preventDefault()
-<<<<<<< HEAD
         this.props.store.dispatch(handleAddGoal(
           this.input.value,
           () => this.input.value = ''
         ))
       }
-=======
-
-        this.props.store.dispatch(handleAddGoal(
-          this.input.value,
-          () => this.input.value = ''  
-        ))
-           
-    }
->>>>>>> 8381e22f05fc36a665e48e3e6cbe16d9fc1210ed
 
     removeItem = (goal) => {
         this.props.store.dispatch(handleDeleteGoal(goal))
