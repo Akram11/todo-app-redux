@@ -73,6 +73,19 @@
       }
     }
 
+    function handleAddTodo (name, cb) {
+      return (dispatch) => {
+        return API.saveTodo(name)
+          .then((todo) => {
+            dispatch(addTodoAction(todo))
+            cb()
+          })
+          .catch(() => {
+            alert('There was an error. Try again.')
+          })
+      }
+    }
+
     function handleDeleteTodo(todo) {
 
       return (dispatch) => {
@@ -153,6 +166,12 @@
     const checker = (store) => (next) => (action) => {
       if (
         action.type === ADD_TODO &&
+        action.todo.name ===''
+      ) {
+          return alert("You can't add an empty task!")
+      }
+      if (
+        action.type === ADD_TODO &&
         action.todo.name.toLowerCase().includes('bitcoin')
       ) {
         return alert("Nope. That's a bad idea.")
@@ -209,15 +228,10 @@ function List (props) {
    class Todos extends React.Component {
     addItem = (e) => {
         e.preventDefault()
-
-        return API.saveTodo(this.input.value)
-        .then ((todo)=> {
-           this.props.store.dispatch(addTodoAction(todo))  
-           this.input.value = ''
-        })
-        .catch(()=> {
-          alert ('there was an error, Try again')
-        })     
+        this.props.store.dispatch(handleAddTodo(
+          this.input.value,
+          () => this.input.value = ''
+        ))     
     }
 
     removeItem = (todo) => {
@@ -313,8 +327,37 @@ function List (props) {
       )
     }
   }
+
+  const context = React.createContext()
+
+  class ConnectedApp extends React.Component{
+    render(){
+      return(
+        <Context.Consumer>
+        {(store)=> (
+          <App store = {store} />
+        ) }
+        </Context.Consumer>
+      )
+    }
+  }
+
+  class Provider extends React.Component{
+    render(){
+      return(
+        <Context.Provider value={this.props.store}>
+        {this.props.children}
+        </Context.Provider>
+      )
+    }
+  }
+
+
+
    ReactDOM.render(
-    <App store={store}/>,
+     <Provider store={store}>
+      <App/>
+     </Provider>,
     document.getElementById('app')
   )
 </script>
